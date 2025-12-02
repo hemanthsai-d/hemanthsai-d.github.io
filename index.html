@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemanth Sai D - Data Engineer & ML Specialist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #101624;
+            --bg-tertiary: #1a2332;
+            --accent-cyan: #00d9ff;
+            --accent-blue: #0066ff;
+            --accent-purple: #7c3aed;
+            --text-primary: #e5e9f0;
+            --text-secondary: #8892a6;
+            --text-muted: #505968;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, 100px) scale(1.1); }
+            66% { transform: translate(-50px, 150px) scale(0.9); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-100px, -100px) scale(1.2); }
+            66% { transform: translate(150px, -50px) scale(0.8); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 26, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .hero .contact-info a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero .contact-info a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), transparent);
+        }
+
+        /* Experience Cards */
+        .experience-grid,
+        .project-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.1);
+        }
+
+        .card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .card-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card-content li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .card-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .skill-category h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 217, 255, 0.1);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Education */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .skills-grid,
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hemanth Sai D</h1>
+            <p class="subtitle">Data Engineer & ML Specialist</p>
+            <div class="contact-info">
+                <a href="tel:+18573856963">+1 (857) 385-6963</a>
+                <span>|</span>
+                <a href="mailto:dhemanthsai3@gmail.com">dhemanthsai3@gmail.com</a>
+                <span>|</span>
+                <span>Jersey City, NJ</span>
+            </div>
+            <a href="#experience" class="cta-button">Explore My Work</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="experience">
+            <h2 class="section-title scroll-reveal">Work Experience</h2>
+            <div class="experience-grid">
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Data Engineer</h3>
+                            <p class="card-subtitle">Arthrex | Remote, US</p>
+                        </div>
+                        <span class="card-date">08/2024 — Present</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Architected NoSQL data infrastructure with CouchDB Lite and Redis for ML-powered surgical analytics, building reusable data accessors and optimized queries that cut model inference latency by 40%</li>
+                            <li>Built multi-modal medical imaging ETL pipelines feeding computer vision models with 4K, NanoScope, and composite video, processing 10,000+ surgical media files with automated preprocessing and robust retry logic</li>
+                            <li>Designed end-to-end MLOps validation and governance for AI/DICOM workflows—schema checks, outlier/drift detection, and BDD test automation—ensuring 100% training data integrity and preventing degraded model releases</li>
+                            <li>Developed real-time IoT telemetry and ML deployment pipelines, streaming device data into Redis time-series for anomaly detection and using CI/CD, A/B testing, and SSH automation to cut alert latency by 35% and boost iteration speed by 50%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Associate Software Engineer</h3>
+                            <p class="card-subtitle">TCS | Bengaluru, India</p>
+                        </div>
+                        <span class="card-date">07/2019 — 08/2022</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Designed and maintained scalable ETL pipelines and automated workflows using Python, SQL, and Flask, reducing data processing time by 40% and enabling faster compliance reporting</li>
+                            <li>Built RESTful APIs and automated data refresh schedules with Flask and cron jobs, increasing data availability by 99% uptime and ensuring validated, high-quality datasets</li>
+                            <li>Developed interactive Tableau dashboards that improved compliance metric visibility, cutting reporting turnaround from days to real-time for key stakeholders</li>
+                            <li>Automated manual compliance reporting tasks, saving 3+ hours per week per analyst and boosting overall reporting productivity by 25%</li>
+                            <li>Collaborated in an Agile team environment, integrating pipelines with CI/CD via Git and Jenkins to reduce deployment errors by 30% and improve release cycle efficiency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title scroll-reveal">Education</h2>
+            <div class="education-grid">
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">MS, Computer Science</h3>
+                            <p class="card-subtitle">University of Massachusetts Boston</p>
+                        </div>
+                        <span class="card-date">08/2022 — 05/2024</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li><strong>Systems Lab Operator:</strong> Managed distributed systems, GPU access via SSH, Kubernetes, Docker, HPC, CI/CD, automation, Linux, security, monitoring</li>
+                            <li><strong>Relevant Coursework:</strong> Distributed Systems, Decentralized and Hybrid Systems, Computer Networks, Neural Networks, Data Science Fundamentals, Data Analysis and Big Data Systems, Natural Language Processing, Large Language Models</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">B.Tech, Computer Science</h3>
+                            <p class="card-subtitle">Reva University</p>
+                        </div>
+                        <span class="card-date">08/2017 — 05/2021</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li><strong>Vice President:</strong> Science & Technology Club</li>
+                            <li><strong>Relevant Coursework:</strong> Data Structures and Algorithms, Object Oriented Programming, Analysis of Algorithms, Cloud Computing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title scroll-reveal">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category scroll-reveal">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">SQL (N1QL)</span>
+                        <span class="skill-tag">Bash/Shell</span>
+                    </div>
+                </div>
+
+                <div class="skill-category scroll-reveal">
+                    <h3>ML / LLM & AI Tooling</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Core ML</span>
+                        <span class="skill-tag">Hugging Face</span>
+                        <span class="skill-tag">llama.cpp</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">FAISS</span>
+                    </div>
+                </div>
+
+                <div class="skill-category scroll-reveal">
+                    <h3>Frameworks & Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SpecFlow (BDD)</span>
+                        <span class="skill-tag">NUnit</span>
+                        <span class="skill-tag">Selenium WebDriver</span>
+                        <span class="skill-tag">xUnit</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Jenkins CI/CD</span>
+                    </div>
+                </div>
+
+                <div class="skill-category scroll-reveal">
+                    <h3>Databases</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">CouchDB Lite (NoSQL)</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">Network Storage (NFS, CIFS/SMB)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category scroll-reveal">
+                    <h3>Performance Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AppDynamics</span>
+                        <span class="skill-tag">Dynatrace</span>
+                        <span class="skill-tag">Splunk</span>
+                    </div>
+                </div>
+
+                <div class="skill-category scroll-reveal">
+                    <h3>Healthcare & Medical Standards</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">DICOM</span>
+                        <span class="skill-tag">HL7</span>
+                        <span class="skill-tag">FDA 21 CFR Part 11</span>
+                        <span class="skill-tag">HIPAA Compliance</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title scroll-reveal">Projects & Publications</h2>
+            <div class="project-grid">
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Micropython RSA Encrypt/Decrypt 2048</h3>
+                            <p class="card-subtitle">UMass Boston</p>
+                        </div>
+                        <span class="card-date">Sep 2023 — Dec 2023</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Designed and implemented secure data transmission on the Raspberry Pi Pico W using RSA-based encryption and decryption</li>
+                            <li>Configured MicroPython to efficiently run cryptographic algorithms, ensuring robust performance on embedded hardware</li>
+                            <li>Developed automated unit test suites to validate encryption and decryption workflows, reducing defects and improving reliability</li>
+                            <li>Utilized Python within Visual Studio for debugging and iteration, while managing collaboration and version control through GitHub</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Protected JPEG Bit Flows Reversible Data Hiding</h3>
+                            <p class="card-subtitle">REVA University</p>
+                        </div>
+                        <span class="card-date">Jan 2021 — Jul 2021</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Developed an automated software testing framework using multi-objective optimization to balance test coverage, execution time, and resource utilization</li>
+                            <li>Integrated AI-driven test case generation for improved defect detection and performance validation</li>
+                            <li>Built using C and Selenium in Visual Studio, incorporating AES encryption for secure test data handling</li>
+                            <li>Complete testing was performed on the UCID and BOSSbase datasets, improving test efficiency and defect detection accuracy by 25%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card scroll-reveal">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Multi-Layer Artificial Neural Networks for Estimating Real Estate Prices</h3>
+                            <p class="card-subtitle">REVA University</p>
+                        </div>
+                        <span class="card-date">Sep 2020 — Dec 2020</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Developed an AI-driven test automation framework using Python and Selenium to enhance software quality assurance processes</li>
+                            <li>Implemented machine learning-based test case generation and defect prediction techniques, improving test coverage and efficiency</li>
+                            <li>Integrated with Azure DevOps for CI/CD automation and real-time reporting</li>
+                            <li>Executed on diverse data sets of applications, increasing the accuracy of defect detection by 20%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hemanth Sai D. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active navigation highlight
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
